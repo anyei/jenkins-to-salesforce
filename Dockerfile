@@ -52,5 +52,5 @@ RUN unzip ${ANT_HOME}/lib/x/salesforce_ant_34.0.zip -d ${ANT_HOME}/lib/x && cp $
 
 RUN chown -R jenkins "${ANT_HOME}" "/usr/share/jenkins/ref/plugins"
 
-
+#Changing to jenkins user
 USER jenkins

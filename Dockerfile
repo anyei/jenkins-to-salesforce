@@ -28,9 +28,10 @@ ADD http://updates.jenkins-ci.org/latest/git.hpi /usr/share/jenkins/ref/plugins/
 
 
 #INSTALLING ANT
+
 RUN mkdir -p /var/ant_home
 
-ADD http://www.webhostingjams.com/mirror/apache/ant/binaries/apache-ant-1.9.6-bin.zip /var/ant_home/apache-ant-1.9.6-bin.zip
+ADD http://ftp.wayne.edu/apache/ant/binaries/apache-ant-1.9.6-bin.zip /var/ant_home/apache-ant-1.9.6-bin.zip
 
 RUN unzip /var/ant_home/apache-ant-1.9.6-bin.zip -d /var/ant_home && rm /var/ant_home/apache-ant-1.9.6-bin.zip
 

@@ -1,4 +1,4 @@
-ns-to-salesforce
+# jenkins-to-salesforce
 
 Simple jenkins image with Force.com Migrations tool.
 
@@ -12,13 +12,13 @@ Tools needed to make deployments to salesforce.com included in this image:
 
 #### plugins installed
 Besides the plugins which comes with the jenkins, the following are some additional plugins included in this image:
-* http://updates.jenkins-ci.org/latest/git.hpi
-* http://updates.jenkins-ci.org/latest/git-client.hpi
-* http://updates.jenkins-ci.org/latest/promoted-builds.hpi
-* http://updates.jenkins-ci.org/latest/scm-api.hpi
-* http://updates.jenkins-ci.org/latest/token-macro.hpi
-* http://updates.jenkins-ci.org/latest/mailer.hpi
-* http://updates.jenkins-ci.org/latest/parameterized-trigger.hpi
+git
+git-client
+promoted-builds
+scm-api
+token-macro
+mailer
+parameterized-trigger
 
 ## Usage
 

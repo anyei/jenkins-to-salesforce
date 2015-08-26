@@ -41,7 +41,7 @@ $ docker run -p 8080:8080 -v /usr/back/jenkins:/var/jenkins_home anyei/jenkins-t
 
 You can do it all in one command too : 
 ```sh
-docker run --name jenkins-sfdc -p 8080:8080 -p 50000:50000 -v /usr/back/jenkins:/var/jenkins_home -d anyei/jenkins-to-salesforce
+$ docker run --name jenkins-sfdc -p 8080:8080 -p 50000:50000 -v /usr/back/jenkins:/var/jenkins_home -d anyei/jenkins-to-salesforce
 ```
 
 Please refer to jenkins official usage for a more complete explanation on the rest of jenkins matter: https://hub.docker.com/_/jenkins/

@@ -58,12 +58,7 @@ Then generate the rsa key pair :
 ```sh
 $ ssh-keygen -t rsa 
 ```
-Follow the instructions, but leaving everything in blank and just hitting enter key will be enough for the public and private key to get generated. Assuming you did so, the public key should be located in the following file /var/jenkins_home/.ssh/id_rsa.pub. 
-
-You can use the content of the file to setup ssh keys to gain access to git repositories, github is a very good example: Go to your github account, then go to settings and then ssh keys, when you add a new ssh key copy the content of the id_rsa.pub file and paste it in the new entry's key field. Also you can use the content with authorized_keys files by appending the content of id_rsa.pub to any authorized_keys file in the target repository server.
-
-Now you go to your jenkins job in the web interface, click on configure button and then go to Source Code Management section, assuming you have the git option selected, click on the add button in the credentials field little bit down bellow the git repo url, choose SSH Username with private key as the kind and select the option from the jenkins master (~/.ssh) and if you set any passphrase put it in the next field as well, then click add button and then the save button at the end. 
-
+Follow the instructions, leaving everything in blank and just hitting enter key will be enough for the public and private key to get generated. Assuming you did so, the public key should be located in the following file /var/jenkins_home/.ssh/id_rsa.pub. You can use that key later to authenticate to github, bitbucket or any other servers accepting this type of authentication. For more information and additional example go to [Github wiki page](https://github.com/anyei/jenkins-to-salesforce/wiki).
 
 ### Documentation
 You can find more about jenkins image in the official [docker repository](https://hub.docker.com/_/jenkins/).

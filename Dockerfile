@@ -59,6 +59,9 @@ RUN unzip ${ANT_HOME}/lib/x/salesforce_ant_48.0.zip -d ${ANT_HOME}/lib/x && cp $
 
 RUN chown -R jenkins "${ANT_HOME}" /usr/bin/get_build_template
 
+RUN apt update && apt -y install sudo \ 
+   && sed -i "2 iexport JAVA_HOME=${JAVA_HOME}" /etc/ca-certificates/update.d/docker-openjdk \
+   && echo 'jenkins ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/jenkins
 #Changing to jenkins user
 USER jenkins
 

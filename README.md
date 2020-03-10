@@ -8,17 +8,10 @@ https://github.com/anyei/jenkins-to-salesforce/issues
 ## Features
 Tools needed to make deployments to salesforce.com included in this image:
 * Force.com Migrations Tool ([official resources]( https://developer.salesforce.com/page/Force.com_Migration_Tool ))
-* https://ant.apache.org/bindownload.cgi
+* Custom script for easy test class listing and base build.xml template
 
 #### plugins installed
-Besides the plugins which comes with the jenkins, the following are some additional plugins included in this image:
-git
-git-client
-promoted-builds
-scm-api
-token-macro
-mailer
-parameterized-trigger
+NONE
 
 ## Usage
 
@@ -46,6 +39,15 @@ $ docker run --name jenkins-sfdc -p 8080:8080 -p 50000:50000 -v /usr/back/jenkin
 
 Please refer to jenkins official usage for a more complete explanation on the rest of jenkins matter: https://hub.docker.com/_/jenkins/
 
+### Jenkins initial screen asking for password
+Latest versions of jenkins asks for a password the very first time you load the page, you will have to get it from the server where is running (in this case from the docker running conainer):
+```sh
+$ docker exec -it jenkins-sfdc /bin/bash
+```
+Then you should be able to cat command to display the password from the path jenkins is asking from:
+```sh
+$ cat path/to/file/jenkins/is/asking
+```
 
 ### Public key authentication with git
 If you have a jenkins job setup with git plugin, the best way to authenticate against the server where the target repository lives is with a public key. Jenkins runs as jenkins user within the container, therefore you'll need jenkin's user public key.
@@ -61,9 +63,7 @@ $ ssh-keygen -t rsa
 Follow the instructions, leaving everything in blank and just hitting enter key will be enough for the public and private key to get generated. Assuming you did so, the public key should be located in the following file /var/jenkins_home/.ssh/id_rsa.pub. You can use that key later to authenticate to github, bitbucket or any other servers accepting this type of authentication. For more information and additional example go to [Github wiki page](https://github.com/anyei/jenkins-to-salesforce/wiki).
 
 ### Documentation
-You can find more about jenkins image in the official [docker repository](https://hub.docker.com/_/jenkins/).
-
-You can find good example how to setup jenkins to deploy to saleforce in [Github wiki page](https://github.com/anyei/jenkins-to-salesforce/wiki)
+You can find more about jenkins image in the official [docker repository](https://hub.docker.com/r/jenkins/jenkins).
 
 ### Issues
 Let's keep this in [Github](https://github.com/anyei/jenkins-to-salesforce/issues).

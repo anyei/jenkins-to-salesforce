@@ -1,4 +1,4 @@
-FROM jenkins:latest
+FROM jenkins/jenkins:lts
 
 MAINTAINER anyei <angelyoelroblesmercedes@gmail.com>
 
@@ -10,47 +10,55 @@ MAINTAINER anyei <angelyoelroblesmercedes@gmail.com>
 USER root
 
 
-#INSTALLING GIT PLUGIN
-
-ADD http://updates.jenkins-ci.org/latest/parameterized-trigger.hpi /usr/share/jenkins/ref/plugins/parameterized-trigger.hpi 
-
-ADD http://updates.jenkins-ci.org/latest/mailer.hpi /usr/share/jenkins/ref/plugins/mailer.hpi
-
-ADD http://updates.jenkins-ci.org/latest/token-macro.hpi /usr/share/jenkins/ref/plugins/token-macro.hpi
-
-ADD http://updates.jenkins-ci.org/latest/scm-api.hpi /usr/share/jenkins/ref/plugins/scm-api.hpi
-
-ADD http://updates.jenkins-ci.org/latest/promoted-builds.hpi /usr/share/jenkins/ref/plugins/promoted-builds.hpi
-
-ADD http://updates.jenkins-ci.org/latest/git-client.hpi /usr/share/jenkins/ref/plugins/git-client.hpi
-
-ADD http://updates.jenkins-ci.org/latest/git.hpi /usr/share/jenkins/ref/plugins/git.hpi
-
-
 #INSTALLING ANT
 
 RUN mkdir -p /var/ant_home
 
-ADD http://ftp.wayne.edu/apache/ant/binaries/apache-ant-1.9.6-bin.zip /var/ant_home/apache-ant-1.9.6-bin.zip
+ADD http://ftp.wayne.edu/apache/ant/binaries/apache-ant-1.10.6-bin.zip /var/ant_home/apache-ant-1.10.6-bin.zip 
 
-RUN unzip /var/ant_home/apache-ant-1.9.6-bin.zip -d /var/ant_home && rm /var/ant_home/apache-ant-1.9.6-bin.zip
+RUN unzip /var/ant_home/apache-ant-1.10.6-bin.zip -d /var/ant_home && rm /var/ant_home/apache-ant-1.10.6-bin.zip
 
-ENV ANT_HOME=/var/ant_home/apache-ant-1.9.6
+ENV ANT_HOME=/var/ant_home/apache-ant-1.10.6
 
 ENV PATH=${PATH}:${ANT_HOME}/bin
 
 #In case anyone is intersted, the following command would retreive additional ant's plugins
 #RUN ant -f ${ANT_HOME}/fetch.xml -Ddest=sytem
 
+#INSTALLING ANT BUILD.XML TEMPLATE FOR SALESFORCE PLUGIN
+
+RUN mkdir -p /var/ant_home/build_template/
+
+ADD tools/buildTemplate.xml /var/ant_home/build_template/build_template.xml
+
+ENV SFDC_BUILD_TEMPLATE=/var/ant_home/build_template/
+
+ENV PATH=${PATH}:${SFDC_BUILD_TEMPLATE}
+
+#INSTALL add_run_tests.sh
+
+ADD tools/add_run_tests.sh /usr/bin/get_build_template
+
+RUN chmod +x /usr/bin/get_build_template
+
+#RUN touch /etc/profile.d/add_run_tests_alias.sh
+
+#RUN echo "alias get_build_template='add_run_tests.sh'" >> /etc/profile.d/add_run_tests_alias.sh
+
+#RUN chmod +x /etc/profile.d/add_run_tests_alias.sh
+
+#RUN  ./etc/profile.d/add_run_tests_alias.sh
 
 #INSTALLING SALESFORCE ANT PLUGIN
 RUN mkdir ${ANT_HOME}/lib/x
 
-ADD https://na17.salesforce.com/dwnld/SfdcAnt/salesforce_ant_34.0.zip ${ANT_HOME}/lib/x/salesforce_ant_34.0.zip
+ADD https://gs0.salesforce.com/dwnld/SfdcAnt/salesforce_ant_48.0.zip ${ANT_HOME}/lib/x/salesforce_ant_48.0.zip
+#https://na17.salesforce.com/dwnld/SfdcAnt/salesforce_ant_34.0.zip ${ANT_HOME}/lib/x/salesforce_ant_34.0.zip
 
-RUN unzip ${ANT_HOME}/lib/x/salesforce_ant_34.0.zip -d ${ANT_HOME}/lib/x && cp ${ANT_HOME}/lib/x/ant-salesforce.jar ${ANT_HOME}/lib/ant-salesforce.jar && rm -rf ${ANT_HOME}/lib/x
+RUN unzip ${ANT_HOME}/lib/x/salesforce_ant_48.0.zip -d ${ANT_HOME}/lib/x && cp ${ANT_HOME}/lib/x/ant-salesforce.jar ${ANT_HOME}/lib/ant-salesforce.jar && rm -rf ${ANT_HOME}/x
 
-RUN chown -R jenkins "${ANT_HOME}" "/usr/share/jenkins/ref/plugins"
+RUN chown -R jenkins "${ANT_HOME}" /usr/bin/get_build_template
 
 #Changing to jenkins user
 USER jenkins
+

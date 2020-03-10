@@ -1,0 +1,104 @@
+<project xmlns:sf="antlib:com.salesforce" name="Sample usage of Salesforce Ant tasks" default="test" basedir=".">
+<property file="build.properties"/>
+<property environment="env"/>
+ <!--
+ Setting default value for username, password and session id properties to empty string 
+         so unset values are treated as empty. Without this, ant expressions such as ${sf.username}
+         will be treated literally.
+    
+-->
+<condition property="sf.user_name" value="">
+<not>
+<isset property="sf.user_name"/>
+</not>
+</condition>
+<condition property="sf.password" value="">
+<not>
+<isset property="sf.password"/>
+</not>
+</condition>
+<condition property="sf.session_id" value="" else="">
+<not>
+<isset property="sf.session_id"/>
+</not>
+</condition>
+<condition property="sf.test_level" value="" else="RunLocalTests">
+<not>
+<isset property="sf.test_level" />
+</not>
+</condition>
+<condition property="sf.ignore_warnings" value="" else="true">
+<not>
+<isset property="sf.ignore_warnings" />
+</not>
+</condition>
+<condition property="sf.check_only" value="" else="false">
+<not>
+<isset property="sf.check_only"  />
+</not>
+</condition>
+<condition property="sf.target_build_folder" value="" else="src">
+<not>
+<isset property="sf.target_build_folder"  />
+</not>
+</condition>
+<condition property="sf.poll_wait_millis" value="" else="10000">
+<not>
+<isset property="sf.poll_wait_millis"  />
+</not>
+</condition>
+<condition property="sf.server_url" value="" else="https://test.salesforce.com">
+<not>
+<isset property="sf.server_url" />
+</not>
+</condition>
+<condition property="sf.max_poll" value="" else="2000">
+<not>
+<isset property="sf.max_poll" />
+</not>
+</condition>
+<condition property="sf.test_classes" value="" else="">
+<not>
+<isset property="sf.test_classes" />
+</not>
+</condition>
+
+
+<taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+<classpath>
+<pathelement location="../ant-salesforce.jar"/>
+</classpath>
+</taskdef>
+ <!--
+ Shows deploying code & running tests for code in directory 
+-->
+<target name="push">
+<echo message="*************************************************************" />
+<echo message="* PUSH to salesforce ${sf.user_name}@${sf.server_url}       " />
+<echo message="* max poll = ${sf.max_poll}                                  " />
+<echo message="* poll wait millis = ${sf.poll_wait_millis}" />
+<echo message="* test level = ${sf.test_level}" />
+<echo message="* target build folder = ${sf.target_build_folder}" />
+<echo message="* check only = ${sf.check_only}" />
+<echo message="* ignore warnings = ${sf.ignore_warnings}" />
+<echo message="* test classes = ${sf.test_classes}" />
+<echo message="*************************************************************" />
+
+ <!--
+ Upload the contents of the "codepkg" directory, running the tests for just 1 class   testLevel="RunSpecifiedTests"  
+-->
+ <!--          <runTest>TimecardEntryFormControllerTest</runTest>      -->
+<sf:deploy username="${sf.user_name}" password="${sf.password}" sessionId="${sf.session_id}" serverurl="${sf.server_url}" maxPoll="${sf.max_poll}" pollWaitMillis="${sf.poll_wait_millis}" deployRoot="${sf.target_build_folder}" testLevel="${sf.test_level}" checkOnly="${sf.check_only}" ignoreWarnings="${sf.ignore_warnings}">
+runTests
+</sf:deploy>
+</target>
+ <!--
+ Shows retrieving code; only succeeds if done after deployCode 
+-->
+<target name="pull">
+ <!--
+ Retrieve the contents listed in the file codepkg/package.xml into the codepkg directory 
+-->
+<sf:retrieve username="${sf.user_name}" password="${sf.password}" sessionId="${sf.session_id}" serverurl="${sf.server_url}" maxPoll="${sf.max_poll}" pollWaitMillis="${sf.poll_wait_millis}" retrieveTarget="${sf.target_build_folder}" unpackaged="${sf.target_build_folder}/package.xml"/>
+</target>
+</project>

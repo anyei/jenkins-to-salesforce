@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:latest
+FROM jenkins/jenkins:lts
 
 MAINTAINER anyei <angelyoelroblesmercedes@gmail.com>
 
@@ -29,7 +29,7 @@ ENV PATH=${PATH}:${ANT_HOME}/bin
 
 RUN mkdir -p /var/ant_home/build_template/
 
-ADD https://raw.githubusercontent.com/anyei/jenkins-to-salesforce/jenkins_jenkins_docker_upgrade/tools/buildTemplate.xml /var/ant_home/build_template/build_template.xml
+ADD tools/buildTemplate.xml /var/ant_home/build_template/build_template.xml
 
 ENV SFDC_BUILD_TEMPLATE=/var/ant_home/build_template/
 
@@ -37,12 +37,17 @@ ENV PATH=${PATH}:${SFDC_BUILD_TEMPLATE}
 
 #INSTALL add_run_tests.sh
 
-ADD https://raw.githubusercontent.com/anyei/jenkins-to-salesforce/jenkins_jenkins_docker_upgrade/tools/add_run_tests.sh /usr/bin/add_run_tests.sh
+ADD tools/add_run_tests.sh /usr/bin/get_build_template
 
-RUN chmod +x /usr/bin/add_run_tests.sh
+RUN chmod +x /usr/bin/get_build_template
 
-RUN echo "alias get_build_template='add_run_tests.sh'" >> /etc/bash.bashrc
+#RUN touch /etc/profile.d/add_run_tests_alias.sh
 
+#RUN echo "alias get_build_template='add_run_tests.sh'" >> /etc/profile.d/add_run_tests_alias.sh
+
+#RUN chmod +x /etc/profile.d/add_run_tests_alias.sh
+
+#RUN  ./etc/profile.d/add_run_tests_alias.sh
 
 #INSTALLING SALESFORCE ANT PLUGIN
 RUN mkdir ${ANT_HOME}/lib/x
@@ -52,7 +57,7 @@ ADD https://gs0.salesforce.com/dwnld/SfdcAnt/salesforce_ant_48.0.zip ${ANT_HOME}
 
 RUN unzip ${ANT_HOME}/lib/x/salesforce_ant_48.0.zip -d ${ANT_HOME}/lib/x && cp ${ANT_HOME}/lib/x/ant-salesforce.jar ${ANT_HOME}/lib/ant-salesforce.jar && rm -rf ${ANT_HOME}/x
 
-RUN chown -R jenkins "${ANT_HOME}" /usr/bin/add_run_tests.sh
+RUN chown -R jenkins "${ANT_HOME}" /usr/bin/get_build_template
 
 #Changing to jenkins user
 USER jenkins

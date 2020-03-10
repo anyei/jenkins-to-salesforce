@@ -17,7 +17,7 @@
 <isset property="sf.password"/>
 </not>
 </condition>
-<condition property="sf.session_id" value="">
+<condition property="sf.session_id" value="" else="">
 <not>
 <isset property="sf.session_id"/>
 </not>
@@ -52,12 +52,12 @@
 <isset property="sf.server_url" />
 </not>
 </condition>
-<condition property="sf.max_poll" value="">
+<condition property="sf.max_poll" value="" else="2000">
 <not>
 <isset property="sf.max_poll" />
 </not>
 </condition>
-<condition property="sf.test_classes" value="">
+<condition property="sf.test_classes" value="" else="">
 <not>
 <isset property="sf.test_classes" />
 </not>

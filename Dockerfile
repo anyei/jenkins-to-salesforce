@@ -65,3 +65,5 @@ RUN apt update && apt -y install sudo \
 #Changing to jenkins user
 USER jenkins
 
+ENTRYPOINT ["/sbin/tini", "--", "update-ca-certificates && /usr/local/bin/jenkins.sh"]
+

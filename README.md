@@ -1,6 +1,6 @@
 # jenkins-to-salesforce
 
-Simple jenkins image with Force.com Migrations tool.
+Simple jenkins image with Force.com Migrations tool api 48.
 
 Please report any issues or comments here:
 https://github.com/anyei/jenkins-to-salesforce/issues
@@ -81,16 +81,17 @@ The command **get_build_template** has three arguments:
 Leave "Build File" field empty as the above image shows, it is implicitly defaulted to build.xml which we are already producing.
 
 This are the list of build properties used by the "push" ant command from the build.xml:
-sf.user_name
-sf.password
-sf.session_id
-sf.test_level               default value is **RunLocalTests**
-sf.ignore_warnings          default value is **true**
-sf.check_only               default value is false
-sf.target_build_folder      default value is src
-sf.poll_wait_millis         default value is 10000
-sf.server_url               default value is https://test.salesforce.com
-sf.max_poll                 default value is 2000
+* sf.user_name
+* sf.password
+* sf.session_id
+* sf.test_level               default value is **RunLocalTests**
+* sf.ignore_warnings          default value is **true**
+* sf.check_only               default value is false
+* sf.target_build_folder      default value is src
+* sf.poll_wait_millis         default value is 10000
+* sf.server_url               default value is https://test.salesforce.com
+* sf.max_poll                 default value is 2000
+
 Almost all of these parameters corresponds to the ant migration tool.
 **sf.target_build_folder** is the folder where you contains your package.xml.
 

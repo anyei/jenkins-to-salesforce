@@ -41,13 +41,11 @@ ADD tools/add_run_tests.sh /usr/bin/get_build_template
 
 RUN chmod +x /usr/bin/get_build_template
 
-#RUN touch /etc/profile.d/add_run_tests_alias.sh
+#INSTALL initial.sh
 
-#RUN echo "alias get_build_template='add_run_tests.sh'" >> /etc/profile.d/add_run_tests_alias.sh
+ADD tools/initial.sh /usr/bin/initial
 
-#RUN chmod +x /etc/profile.d/add_run_tests_alias.sh
-
-#RUN  ./etc/profile.d/add_run_tests_alias.sh
+RUN chmod +x /usr/bin/initial
 
 #INSTALLING SALESFORCE ANT PLUGIN
 RUN mkdir ${ANT_HOME}/lib/x
@@ -65,5 +63,5 @@ RUN apt update && apt -y install sudo \
 #Changing to jenkins user
 USER jenkins
 
-ENTRYPOINT ["/sbin/tini", "--", "update-ca-certificates && /usr/local/bin/jenkins.sh"]
+ENTRYPOINT ["initial"]
 

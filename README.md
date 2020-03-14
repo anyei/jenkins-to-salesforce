@@ -93,7 +93,7 @@ This are the list of build properties used by the "push" ant command from the bu
 * sf.max_poll                 default value is 2000
 
 Almost all of these parameters corresponds to the ant migration tool.
-**sf.target_build_folder** is the folder where you contains your package.xml.
+**sf.target_build_folder** is the folder where you have your package.xml.
 
 ### Documentation
 You can find more about jenkins image in the official [docker repository](https://hub.docker.com/r/jenkins/jenkins).

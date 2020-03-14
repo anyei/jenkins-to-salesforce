@@ -20,4 +20,5 @@ then
 	done
 fi
 echo "Results to $2"
-echo ${f/runTests/$tests} > "$2"
+final=${f/runTests/$tests} 
+echo ${final/apexTestList/$3} > "$2"

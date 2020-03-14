@@ -8,59 +8,34 @@
     
 -->
 <condition property="sf.user_name" value="">
-<not>
 <isset property="sf.user_name"/>
-</not>
 </condition>
 <condition property="sf.password" value="">
-<not>
 <isset property="sf.password"/>
-</not>
 </condition>
 <condition property="sf.session_id" value="" else="">
-<not>
 <isset property="sf.session_id"/>
-</not>
 </condition>
-<condition property="sf.test_level" value="" else="RunLocalTests">
-<not>
+<condition property="sf.test_level" value="${sf.test_level}" else="RunLocalTests">
 <isset property="sf.test_level" />
-</not>
 </condition>
-<condition property="sf.ignore_warnings" value="" else="true">
-<not>
+<condition property="sf.ignore_warnings" value="${sf.ignore_warnings}" else="true">
 <isset property="sf.ignore_warnings" />
-</not>
 </condition>
-<condition property="sf.check_only" value="" else="false">
-<not>
+<condition property="sf.check_only" value="${sf.check_only}" else="false">
 <isset property="sf.check_only"  />
-</not>
 </condition>
-<condition property="sf.target_build_folder" value="" else="src">
-<not>
+<condition property="sf.target_build_folder" value="${sf.target_build_folder}" else="src">
 <isset property="sf.target_build_folder"  />
-</not>
 </condition>
-<condition property="sf.poll_wait_millis" value="" else="10000">
-<not>
+<condition property="sf.poll_wait_millis" value="${sf.poll_wait_millis}" else="10000">
 <isset property="sf.poll_wait_millis"  />
-</not>
 </condition>
-<condition property="sf.server_url" value="" else="https://test.salesforce.com">
-<not>
+<condition property="sf.server_url" value="${sf.server_url}" else="https://test.salesforce.com">
 <isset property="sf.server_url" />
-</not>
 </condition>
-<condition property="sf.max_poll" value="" else="2000">
-<not>
+<condition property="sf.max_poll" value="${sf.max_poll}" else="2000">
 <isset property="sf.max_poll" />
-</not>
-</condition>
-<condition property="sf.test_classes" value="" else="">
-<not>
-<isset property="sf.test_classes" />
-</not>
 </condition>
 
 
@@ -81,7 +56,7 @@
 <echo message="* target build folder = ${sf.target_build_folder}" />
 <echo message="* check only = ${sf.check_only}" />
 <echo message="* ignore warnings = ${sf.ignore_warnings}" />
-<echo message="* test classes = ${sf.test_classes}" />
+<echo message="* test classes = apexTestList"/>
 <echo message="*************************************************************" />
 
  <!--

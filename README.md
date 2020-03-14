@@ -37,7 +37,7 @@ You can do it all in one command too :
 $ docker run --name jenkins-sfdc -p 8080:8080 -p 50000:50000 -v /usr/back/jenkins:/var/jenkins_home -d anyei/jenkins-to-salesforce
 ```
 
-Please refer to jenkins official usage for a more complete explanation on the rest of jenkins matter: https://hub.docker.com/_/jenkins/
+Please refer to jenkins official usage for a more complete explanation on the rest of jenkins matter: https://hub.docker.com/r/jenkins/jenkins
 
 ### Jenkins initial screen asking for password
 Latest versions of jenkins asks for a password the very first time you load the page, you will have to get it from the server where is running (in this case from the docker running conainer):

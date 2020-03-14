@@ -78,18 +78,19 @@ The command **get_build_template** has three arguments:
 ##### Now add your invoke ant build step and fill the properties so that the build.xml produced has inputs and the deployment can be performed, it should look like the following image.
 
 ![push to salesforce](https://github.com/anyei/jenkins-to-salesforce/raw/master/images/pushToSfdc.PNG)
+Leave "Build File" field empty as the above image shows, it is implicitly defaulted to build.xml which we are already producing.
 
 This are the list of build properties used by the "push" ant command from the build.xml:
 sf.user_name
 sf.password
 sf.session_id
-sf.test_level
-sf.ignore_warnings
-sf.check_only
-sf.target_build_folder
-sf.poll_wait_millis
-sf.server_url
-sf.max_poll
+sf.test_level               default value is **RunLocalTests**
+sf.ignore_warnings          default value is **true**
+sf.check_only               default value is false
+sf.target_build_folder      default value is src
+sf.poll_wait_millis         default value is 10000
+sf.server_url               default value is https://test.salesforce.com
+sf.max_poll                 default value is 2000
 Almost all of these parameters corresponds to the ant migration tool.
 **sf.target_build_folder** is the folder where you contains your package.xml.
 

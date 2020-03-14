@@ -62,6 +62,22 @@ $ ssh-keygen -t rsa
 ```
 Follow the instructions, leaving everything in blank and just hitting enter key will be enough for the public and private key to get generated. Assuming you did so, the public key should be located in the following file /var/jenkins_home/.ssh/id_rsa.pub. You can use that key later to authenticate to github, bitbucket or any other servers accepting this type of authentication. For more information and additional example go to [Github wiki page](https://github.com/anyei/jenkins-to-salesforce/wiki).
 
+### ADDITIONAL - ADD specific test classes when test level = RunSpecifiedTests
+
+With this you can use the build_template.xml file we already included in the image and add specific tests you wish to run:
+* Add an execute shell build step and add the following lines:
+```
+get_build_template "${SFDC_BUILD_TEMPLATE}build_template.xml" "${WORKSPACE}/build.xml" "JPath_Test,AnotherTest"
+```
+
+The command **get_build_template** has three arguments:
+* first is the template to use, in this case the path is already available in the SFDC_BUILD_TEMPLATE environment variable.
+* second is the resulting build.xml full path, in this case we are using the current workspace and the build.xml name (this is important as ant will be looking for something called build.xml by default).
+* third, this is optional, if you want to run specific tests then you pass a comma separated list of test class names without spaces.
+
+* Now add your invoke ant build step and fill the properties so that the build.xml produced has inputs and the deployment can be performed.
+
+
 ### Documentation
 You can find more about jenkins image in the official [docker repository](https://hub.docker.com/r/jenkins/jenkins).
 

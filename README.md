@@ -62,21 +62,36 @@ $ ssh-keygen -t rsa
 ```
 Follow the instructions, leaving everything in blank and just hitting enter key will be enough for the public and private key to get generated. Assuming you did so, the public key should be located in the following file /var/jenkins_home/.ssh/id_rsa.pub. You can use that key later to authenticate to github, bitbucket or any other servers accepting this type of authentication. For more information and additional example go to [Github wiki page](https://github.com/anyei/jenkins-to-salesforce/wiki).
 
-### ADDITIONAL - ADD specific test classes when test level = RunSpecifiedTests
+### ADDITIONAL - USE build_template.xml included in the image
 
-With this you can use the build_template.xml file we already included in the image and add specific tests you wish to run:
+If you want to use the build_template.xml included in this image and leverage the ability to include specific test class to run during the build/deployment:
 * Add an execute shell build step and add the following lines:
 ```
 get_build_template "${SFDC_BUILD_TEMPLATE}build_template.xml" "${WORKSPACE}/build.xml" "JPath_Test,AnotherTest"
 ```
 
 The command **get_build_template** has three arguments:
-* first is the template to use, in this case the path is already available in the SFDC_BUILD_TEMPLATE environment variable.
+* first is the template to use, in this case the path to the folder is available in the SFDC_BUILD_TEMPLATE environment variable.
 * second is the resulting build.xml full path, in this case we are using the current workspace and the build.xml name (this is important as ant will be looking for something called build.xml by default).
 * third, this is optional, if you want to run specific tests then you pass a comma separated list of test class names without spaces.
 
-* Now add your invoke ant build step and fill the properties so that the build.xml produced has inputs and the deployment can be performed.
+##### Now add your invoke ant build step and fill the properties so that the build.xml produced has inputs and the deployment can be performed, it should look like the following image.
 
+![push to salesforce](https://github.com/anyei/jenkins-to-salesforce/raw/master/images/pushToSfdc.PNG)
+
+This are the list of build properties used by the "push" ant command from the build.xml:
+sf.user_name
+sf.password
+sf.session_id
+sf.test_level
+sf.ignore_warnings
+sf.check_only
+sf.target_build_folder
+sf.poll_wait_millis
+sf.server_url
+sf.max_poll
+Almost all of these parameters corresponds to the ant migration tool.
+**sf.target_build_folder** is the folder where you contains your package.xml.
 
 ### Documentation
 You can find more about jenkins image in the official [docker repository](https://hub.docker.com/r/jenkins/jenkins).

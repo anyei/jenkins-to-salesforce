@@ -100,9 +100,9 @@ You can find more about jenkins image in the official [docker repository](https:
 
 ### Issues
 Let's keep this in [Github](https://github.com/anyei/jenkins-to-salesforce/issues).
-test
-test2
-test3
+c
+b
+a
 ### Contributing
 
 You are invited to contribute, let's keep in touch in [Github](https://github.com/anyei/jenkins-to-salesforce)
